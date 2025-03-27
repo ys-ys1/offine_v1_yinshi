@@ -57,11 +57,16 @@ def main(submitter):
                     # 上映年份
                     release_year = row.find_by_xpath('./td[1]').get_text().strip()
 
-                    # 制片地区，根据国旗图标判断
+                    # 制片地区
                     flag_element = row.find_by_xpath('./td[1]/img')
-                    if flag_element and flag_element.get_attribute('src'):
-                        if "china" in flag_element.get_attribute('src').lower():
+                    if flag_element:
+                        flag_src = flag_element.get_attribute('src')
+                        if "1f1e8-1f1f3" in flag_src:  # 中国国旗相关特征
                             production_area = "中国"
+                        elif "1f1fa-1f1f8" in flag_src:  # 美国国旗相关特征
+                            production_area = "美国"
+                        elif "1f1ef-1f1f5" in flag_src:  # 日本国旗相关特征
+                            production_area = "日本"
                         else:
                             production_area = "其他"
                     else:
@@ -91,11 +96,6 @@ def main(submitter):
                 try:
                     next_page_btn.click()
                     random_sleep()
-                    from selenium.webdriver.support.ui import WebDriverWait
-                    from selenium.webdriver.support import expected_conditions as EC
-                    from selenium.webdriver.common.by import By
-                    wait = WebDriverWait(web_page.driver, 30)
-                    wait.until(EC.presence_of_all_elements_located((By.XPATH, '//table/tbody/tr')))
                 except Exception as click_err:
                     print(f"点击下一页按钮失败: {click_err}")
                     break
