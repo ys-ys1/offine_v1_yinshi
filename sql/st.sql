@@ -506,7 +506,7 @@ select
     sum(if(mn.order_count>3,1,0))  buy3timeLast  ,
     sum(if(mn.order_count>=3,1,0))/sum( if(mn.order_count>=1,1,0)) buy3timeLastRatio ,
     date_format('2025-03-23' ,'yyyy-MM') stat_mn,
-    '2025-03-23' stat_date
+    '2025-03-24' stat_date
 from
     (
         select od.sku_tm_id,
